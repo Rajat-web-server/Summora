@@ -4,7 +4,15 @@ const app = express();
 const PORT = process.env.PORT;
 const loginRoutes = require("./routes/auth.js");
 const user = require("./routes/user.js");
+const signup = require("./routes/signup.js");
 const pool = require("./db.js");
+const Cors = require("cors")
+
+app.use(cors());
+
+app.use(express.json());
+app.use("/api", signup);
+
 
 app.get("/health", async (req, res) => {
   try {
@@ -20,12 +28,17 @@ app.get("/health", async (req, res) => {
     });
   }
 });
+
 app.get("/", (req, res) => {
   res.end("Hello world yoo");
 });
 app.use("/users", user);
 app.use("/auth", loginRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+try {
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+} catch (error) {
+  console.log("Error : ", error);
+}
