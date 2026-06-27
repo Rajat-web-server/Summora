@@ -8,7 +8,8 @@ const signup = require("./routes/signup.js");
 const pool = require("./db.js");
 const Cors = require("cors")
 
-app.use(cors());
+// app.use(cors());
+
 
 app.use(express.json());
 app.use("/api", signup);
