@@ -6,7 +6,7 @@ const pool = require("../db.js");
 router.post("/test", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("body:",req.body);
+    // console.log("body:", req.body);
 
     if (!password || !email) {
       return res.status(400).json({
@@ -15,29 +15,22 @@ router.post("/test", async (req, res) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 12);
+    const query_ =
+      "INSERT INTO user_table (email, password) VALUES ($1, $2) RETURNING email, password";
 
-    const result = await pool.query(
-      "INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id, email",
-      [email, hashedPassword],
-    );
+    const result = await pool.query(query_, [email, password]);
 
     const newUser = result.rows[0];
     res.status(201).json({
       message: "User created successfully",
       user: {
-        id: newUser.id,
         email: newUser.email,
       },
     });
   } catch (error) {
     console.log("Error :", error);
-     res.status(500).json({ message: "Something went wrong" });
+    res.status(500).json({ message: "Something went wrong" });
   }
-});
-console.log("hello");
-
-router.get("/test", (req, res) => {
-  res.json({ message: "Server is working" });
 });
 
 module.exports = router;
