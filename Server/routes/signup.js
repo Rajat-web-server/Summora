@@ -18,7 +18,7 @@ router.post("/test", async (req, res) => {
     const query_ =
       "INSERT INTO user_table (email, password) VALUES ($1, $2) RETURNING email, password";
 
-    const result = await pool.query(query_, [email, password]);
+    const result = await pool.query(query_, [email, hashedPassword]);
 
     const newUser = result.rows[0];
     res.status(201).json({
@@ -31,6 +31,10 @@ router.post("/test", async (req, res) => {
     console.log("Error :", error);
     res.status(500).json({ message: "Something went wrong" });
   }
+});
+router.get("/test", async (req, res) => {
+  res.json({ message: "Server is working!"
+   });
 });
 
 module.exports = router;
