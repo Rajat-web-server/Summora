@@ -15,15 +15,27 @@
 
 // module.exports = pool;
 
-const {Pool}= require("pg");
+const { Pool } = require("pg");
 
 const conn = new Pool({
-   host:"localhost",
-   user:'postgres',
-   port:5432,
-  password:"Query_123",
-  database:"Summora_db"
-})
+  host: "localhost",
+  user: "postgres",
+  port: 5432,
+  password: "Query_123",
+  database: "Summora_db",
+});
 
-conn.connect().then(()=>console.log("The Database is connected"))
+conn.connect().then(() => console.log("The Database is connected"));
 
+async function getDemo_table() {
+  try {
+    const res = await conn.query('SELECT * FROM "Demo_table"');
+    console.log(res.rows);
+  } catch (error){
+    console.log(error.message);
+  } finally {
+    await conn.end();
+  }
+}
+
+getDemo_table();
