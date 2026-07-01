@@ -1,7 +1,29 @@
-const { Pool } = require('pg');
+// require("dotenv").config();
 
-const pool = new Pool({
-   connectionString: process.env.DATABASE_URL,
-});
+// const { Pool } = require('pg');
 
-module.exports = pool;
+// const pool = new Pool({
+//    connectionString: process.env.DATABASE_URL,
+// });
+// pool.connect().then((client)=>{console.log("Connected")
+//    client.release();
+// })
+//  .catch(err => {
+//     console.error("Database connection failed:", err.message);
+//     process.exit(1); // or handle gracefully
+//   });
+
+// module.exports = pool;
+
+const {Pool}= require("pg");
+
+const conn = new Pool({
+   host:"localhost",
+   user:'postgres',
+   port:5432,
+  password:"Query_123",
+  database:"Summora_db"
+})
+
+conn.connect().then(()=>console.log("The Database is connected"))
+
