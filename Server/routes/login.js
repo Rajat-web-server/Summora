@@ -31,7 +31,10 @@ router.post('/login', async (req,res)=>{
       );
       res.status(200).json({ token });
 
-    }catch{
-
+    }catch(err){
+        console.log("Error :", error);
+      res.status(500).json({ message: "Something went wrong" })
     }
 })
+
+module.exports = router;
