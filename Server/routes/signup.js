@@ -13,15 +13,12 @@ router.post("/test", async (req, res) => {
         message: "Email and password not there",
       });
     }
- 
-
-    
     const hashedPassword = await bcrypt.hash(password, 12);
     const query_ =
       "INSERT INTO user_table (email, password) VALUES ($1, $2) RETURNING email, password";
 
     const result = await pool.query(query_, [email, hashedPassword]);
-
+    
     const newUser = result.rows[0];
     res.status(201).json({
       message: "User created successfully",
@@ -29,6 +26,7 @@ router.post("/test", async (req, res) => {
         email: newUser.email,
       },
     });
+    console.log(newUser.password.length)
   } catch (error) {
     if (error.code === "23505") {
       return res.status(409).json({ error: "Email already exists" });
