@@ -1,30 +1,28 @@
-// require("dotenv").config();
-
-// const { Pool } = require('pg');
-
-// const pool = new Pool({
-//    connectionString: process.env.DATABASE_URL,
-// });
-// pool.connect().then((client)=>{console.log("Connected")
-//    client.release();
-// })
-//  .catch(err => {
-//     console.error("Database connection failed:", err.message);
-//     process.exit(1); // or handle gracefully
-//   });
-
-
+require("dotenv").config();
 const { Pool } = require("pg");
 
 const pool = new Pool({
-   host: "localhost",
-   user: "postgres",
-   port: 5432,
-   password: "Query_123",
-   database: "Summora_db",
+   connectionString: process.env.DATABASE_URL,
 });
+pool.connect().then((client)=>{console.log("Connected")
+   client.release();
+})
+ .catch(err => {
+    console.error("Database connection failed:", err.message);
+    process.exit(1); // or handle gracefully
+  });
+  pool.connect().then(() => console.log("The Database is connected"));
 
-pool.connect().then(() => console.log("The Database is connected"));
+
+
+// const pool = new Pool({
+//    host: "localhost",
+//    user: "postgres",
+//    port: 5432,
+//    password: "Query_123",
+//    database: "Summora_db",
+// });
+
 
 // async function getDemo_table() {
 //    try {
