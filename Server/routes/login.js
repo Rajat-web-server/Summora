@@ -15,8 +15,23 @@ router.post('/login', async (req,res)=>{
 
       const result = await pool.query(query_,[userEmail]);
 
+      //Using bcrypt.compare
+      const comapare_password =  await bcrypt.compare(password, result.password)
+
+      if(!comapare_password){
+        return res.status(401).json({
+            message:"Invalid email or password"
+        })
+      }
+      //Sign JWT
+      const token = jwt.sign(
+        {email: email},
+        process.env.JWT_SECRET,
+        {expiresIn:'1h'}
+      );
+      res.status(200).json({ token });
 
     }catch{
-        
+
     }
 })
