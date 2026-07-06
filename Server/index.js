@@ -6,6 +6,7 @@ const loginRoutes = require("./routes/auth.js");
 const user = require("./routes/user.js");
 const signup = require("./routes/signup.js");
 const pool = require("./db.js");
+const login = require("./routes/login.js")
 const Cors = require("cors")
 
 // app.use(cors());
@@ -13,6 +14,7 @@ const Cors = require("cors")
 
 app.use(express.json());
 app.use("/api", signup);
+app.use("/post", login);
 
 
 app.get("/health", async (req, res) => {
