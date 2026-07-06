@@ -24,7 +24,9 @@ CREATE TABLE idktable (
     id SERIAL PRIMARY key,
     email VARCHAR(255) UNIQUE NOT NULL
 )
-
+CREATE TABLE user_table(
+    email VARCHAR(255) UNIQUE NOT NULL
+)
 
 
 -- JSONB stores JSON data directly in the database
